@@ -1,0 +1,84 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python src/data_ingestion.py
+    deps:
+    - path: src/data_ingestion.py
+      hash: md5
+      md5: e9a94a9194393916c4b04cbcd1844c34
+      size: 2816
+    outs:
+    - path: data/raw
+      hash: md5
+      md5: 0a9131c06c96499e7f89b4154436c7ea.dir
+      size: 484846
+      nfiles: 2
+  data_preprocessing:
+    cmd: python src/data_preprocessing.py
+    deps:
+    - path: data/raw
+      hash: md5
+      md5: 0a9131c06c96499e7f89b4154436c7ea.dir
+      size: 484846
+      nfiles: 2
+    - path: src/data_preprocessing.py
+      hash: md5
+      md5: 83af22eb7954c71049b6a86ac23f7d0c
+      size: 3975
+    outs:
+    - path: data/interim
+      hash: md5
+      md5: 40cb848ce71a81c4f582d99fa6f0a9e8.dir
+      size: 260026
+      nfiles: 2
+  feature_engineering:
+    cmd: python src/feature_engineering.py
+    deps:
+    - path: data/interim
+      hash: md5
+      md5: 40cb848ce71a81c4f582d99fa6f0a9e8.dir
+      size: 260026
+      nfiles: 2
+    - path: src/feature_engineering.py
+      hash: md5
+      md5: f6abe205ba47b772ee2b2b9fb11c1570
+      size: 3946
+    outs:
+    - path: data/processed
+      hash: md5
+      md5: 01eb34bbf76e065e049cf32cdb06d8b3.dir
+      size: 1179863
+      nfiles: 2
+  model:
+    cmd: python src/model.py
+    deps:
+    - path: data/processed
+      hash: md5
+      md5: 01eb34bbf76e065e049cf32cdb06d8b3.dir
+      size: 1179863
+      nfiles: 2
+    - path: src/model.py
+      hash: md5
+      md5: 73cd829c9a46bae4956eadc366267dd8
+      size: 4486
+    outs:
+    - path: models/model.pkl
+      hash: md5
+      md5: 7a681065d36bc720ef0dbbb730d5db3f
+      size: 903358
+  model_evaluation:
+    cmd: python src/model_evaluation.py
+    deps:
+    - path: models/model.pkl
+      hash: md5
+      md5: 7a681065d36bc720ef0dbbb730d5db3f
+      size: 903358
+    - path: src/model_evaluation.py
+      hash: md5
+      md5: 93669b15d93fb5f071d68ed1ebe1e2a6
+      size: 4690
+    outs:
+    - path: reports/metrics.json
+      hash: md5
+      md5: 52a4581c9760602c23d32474a82b93d7
+      size: 144
