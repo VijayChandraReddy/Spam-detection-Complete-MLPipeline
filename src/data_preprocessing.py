@@ -81,8 +81,8 @@ def main(text_column='text', target_column='target'):
     """
     try:
         # Fetch the data from data/raw
-        train_data = pd.read_csv('./data/raw/train_data.csv')
-        test_data = pd.read_csv('./data/raw/test_data.csv')
+        train_data = pd.read_csv('./data/raw/train_data')
+        test_data = pd.read_csv('./data/raw/test_data')
         logger.debug('Data loaded properly')
 
         # Transform the data
